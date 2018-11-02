@@ -36,7 +36,7 @@ Public Class frmMain
         ofdData.Filter = "All Files (*.*)|*.*|Text Files (*.txt)|*.txt"
         ofdData.FilterIndex = 2
         Select Case strType
-            Case "CutomerData"
+            Case "CustomerData"
                 ofdData.Title = "Select Customer Data File"
             Case "OrderData"
                 ofdData.Title = "Select Order Data File"
@@ -52,6 +52,9 @@ Public Class frmMain
             ReadInputFile(strFileName, strType)
         Catch ex As FileNotFoundException
             MessageBox.Show("FileNotFound exception at ReadInputFile in OpenFile", "Program error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Sub
+        Catch ex As IndexOutOfRangeException
+            MessageBox.Show("Selected file incompatible or corrupt", "Program error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         Catch ex As IOException
             MessageBox.Show("IOException at ReadInputFile in OpenFile", "Program error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -71,15 +74,28 @@ Public Class frmMain
         fileIn = New StreamReader(strFileIn)
         fileIn.ReadLine() 'throw away the first record in the file
         Select Case strType
+
             Case "CustomerData"
                 tvwCust.Nodes.Clear()
+                'build letter top nodes
+                For i = 65 To 90 'ASCII codes for uppercase A-Z
+                    tvwCust.Nodes.Add(Chr(i), Chr(i)) 'add node with key value and text value
+                Next
                 While Not fileIn.EndOfStream
-                    strLineIn = fileIn.ReadLine
+                    strLineIn = fileIn.ReadLine()
                     strFields = strLineIn.Split(","c)
-                    Dim newNode As New TreeNode
-                    newNode.Text = strFields(1) & ", " & strFields(2)
+                    'Dim newNode As New TreeNode
+                    'newNode.Text = strFields(1) & ", " & strFields(2)
+                    'newNode.Tag = strFields(0) 'hide the ID lookup value
+                    'tvwCust.Nodes.Add(newNode)
+                    Dim parentNode() As TreeNode
+                    parentNode = tvwCust.Nodes.Find(strFields(1).Substring(0, 1), True) 'find the correct parent node
+                    parentNode(0).Nodes.Add(strFields(0), strFields(1) & ", " & strFields(2))
                 End While
+                tvwCust.ExpandAll()
+                tvwCust.Refresh()
             Case "OrderData"
+
 
             Case Else
                 MessageBox.Show("Unhandled exception in ReadInputFile", "Program error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -90,5 +106,9 @@ Public Class frmMain
 
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
         Application.Exit()
+    End Sub
+
+    Private Sub btnLoad_Click(sender As Object, e As EventArgs) Handles btnLoad.Click
+        OpenFile("CustomerData")
     End Sub
 End Class
