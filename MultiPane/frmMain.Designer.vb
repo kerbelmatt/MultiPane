@@ -32,6 +32,8 @@ Partial Class frmMain
         Me.grpWorkArea = New System.Windows.Forms.GroupBox()
         Me.SplitContainer4 = New System.Windows.Forms.SplitContainer()
         Me.ofdData = New System.Windows.Forms.OpenFileDialog()
+        Me.tvwCust = New System.Windows.Forms.TreeView()
+        Me.tvwOrders = New System.Windows.Forms.TreeView()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -40,6 +42,8 @@ Partial Class frmMain
         Me.SplitContainer3.Panel1.SuspendLayout()
         Me.SplitContainer3.Panel2.SuspendLayout()
         Me.SplitContainer3.SuspendLayout()
+        Me.grpList.SuspendLayout()
+        Me.grpOrders.SuspendLayout()
         CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer2.Panel1.SuspendLayout()
         Me.SplitContainer2.Panel2.SuspendLayout()
@@ -95,6 +99,7 @@ Partial Class frmMain
         '
         'grpList
         '
+        Me.grpList.Controls.Add(Me.tvwCust)
         Me.grpList.Location = New System.Drawing.Point(12, 12)
         Me.grpList.Name = "grpList"
         Me.grpList.Size = New System.Drawing.Size(220, 290)
@@ -104,6 +109,7 @@ Partial Class frmMain
         '
         'grpOrders
         '
+        Me.grpOrders.Controls.Add(Me.tvwOrders)
         Me.grpOrders.Location = New System.Drawing.Point(12, 15)
         Me.grpOrders.Name = "grpOrders"
         Me.grpOrders.Size = New System.Drawing.Size(220, 345)
@@ -162,6 +168,22 @@ Partial Class frmMain
         '
         Me.ofdData.FileName = "OpenFileDialog1"
         '
+        'tvwCust
+        '
+        Me.tvwCust.FullRowSelect = True
+        Me.tvwCust.Location = New System.Drawing.Point(6, 24)
+        Me.tvwCust.Name = "tvwCust"
+        Me.tvwCust.Size = New System.Drawing.Size(208, 260)
+        Me.tvwCust.TabIndex = 0
+        '
+        'tvwOrders
+        '
+        Me.tvwOrders.FullRowSelect = True
+        Me.tvwOrders.Location = New System.Drawing.Point(6, 24)
+        Me.tvwOrders.Name = "tvwOrders"
+        Me.tvwOrders.Size = New System.Drawing.Size(208, 315)
+        Me.tvwOrders.TabIndex = 1
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 17.0!)
@@ -182,6 +204,8 @@ Partial Class frmMain
         Me.SplitContainer3.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer3.ResumeLayout(False)
+        Me.grpList.ResumeLayout(False)
+        Me.grpOrders.ResumeLayout(False)
         Me.SplitContainer2.Panel1.ResumeLayout(False)
         Me.SplitContainer2.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -202,4 +226,6 @@ Partial Class frmMain
     Friend WithEvents btnExit As Button
     Friend WithEvents grpWorkArea As GroupBox
     Friend WithEvents ofdData As OpenFileDialog
+    Friend WithEvents tvwCust As TreeView
+    Friend WithEvents tvwOrders As TreeView
 End Class

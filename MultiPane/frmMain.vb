@@ -51,13 +51,13 @@ Public Class frmMain
         Try
             ReadInputFile(strFileName, strType)
         Catch ex As FileNotFoundException
-            MessageBox.Show("FileNotFound exception at ReadInputFile", "Program error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("FileNotFound exception at ReadInputFile in OpenFile", "Program error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         Catch ex As IOException
-            MessageBox.Show("IOException at ReadInputFile", "Program error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("IOException at ReadInputFile in OpenFile", "Program error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         Catch ex As Exception
-            MessageBox.Show("Unhandled exception at ReadInputFile", "Program error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Unhandled exception at ReadInputFile in OpenFile", "Program error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
 
         End Try
@@ -70,6 +70,21 @@ Public Class frmMain
         Dim i As Integer
         fileIn = New StreamReader(strFileIn)
         fileIn.ReadLine() 'throw away the first record in the file
+        Select Case strType
+            Case "CustomerData"
+                tvwCust.Nodes.Clear()
+                While Not fileIn.EndOfStream
+                    strLineIn = fileIn.ReadLine
+                    strFields = strLineIn.Split(","c)
+                    Dim newNode As New TreeNode
+                    newNode.Text = strFields(1) & ", " & strFields(2)
+                End While
+            Case "OrderData"
+
+            Case Else
+                MessageBox.Show("Unhandled exception in ReadInputFile", "Program error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+        End Select
 
     End Sub
 
